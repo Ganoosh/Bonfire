@@ -1,0 +1,13 @@
+{
+    "token" : "NzUwMjE3MTUwNDc5NzI4NzIx.X03UKw.juxDRIFmFCopOasvx5pgFjIq97E",
+    "owner_id" : "378272063590367249",
+    "prefix": "m!",
+    "database_1" : {
+        "host" : "pwcspfbyl73eccbn.cbetxkdyhwsb.us-east-1.rds.amazonaws.com",
+        "database" : "awwxlh1fyt7t8rb2",
+        "user" : "sy6kxgz8w8w88pl1",
+        "password" : "ptnz78frvh4oydzv",
+        "port" : "3306"
+    }
+
+}
