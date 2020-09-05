@@ -9,6 +9,7 @@ class info(commands.Cog):
     def __init__(self, client):
         self.client = client
 
+
     @commands.command(pass_context=True)
     async def ping(self, ctx):
         """ Pong! """
@@ -21,6 +22,13 @@ class info(commands.Cog):
         await message.delete()
         await ctx.send(embed=embed)
 
+    @commands.command()
+    async def help(self, ctx):
+        embed = discord.Embed(title="MAB Commands")
+        embed.add_field(name="Polls:", value="_m!create_ : Interactive poll setup\n_m!create_ {channel} {time (f = forever)} {type s(sec)/m(min)/f(inf)} {poll title} | {option1, option2, etc}\nCommas in your title arent allowed.")
+        embed.add_field(name="Info:", value="_m!ping_ : Gets bot ping", inline=False)
+        embed.add_field(name="Util:", value="_m!remindme {time} {m(minutes) or s(seconds)} {reminder text}_ : reminds you.", inline=False)
+        await ctx.send(embed=embed)
 
 def setup(client):
     client.add_cog(info(client))

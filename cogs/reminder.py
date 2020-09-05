@@ -1,7 +1,8 @@
-import discord, pause, pytz, json, time, asyncio
+import discord, pytz, json, time, asyncio
+import datetime as dt
 from discord import *
 from discord.ext import *
-import datetime as dt
+from discord.ext import commands, timers
 from datetime import datetime as datetime_dt
 from itertools import cycle
 from discord.ext import tasks

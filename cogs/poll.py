@@ -1,6 +1,8 @@
-import discord, pause, pytz, json, time, asyncio
+import discord, pytz, json, time, asyncio
 from discord import *
 from discord.ext import *
+from discord.ext import commands
+from discord.ext import timers as timers
 import datetime as dt
 from datetime import datetime as datetime_dt
 from itertools import cycle
@@ -25,7 +27,7 @@ class poll(commands.Cog):
         with open('./cogs/cog_assets/polls.json') as json_file:
             data = json.load(json_file)
         dt_now = datetime_dt.today()
-        timeString = dt_now.strftime("%-d.%-m %-y-%-I.%M.%-S")
+        timeString = dt_now.strftime("%-d.%-m %-y:%-I.%M.%-S")
         time = timeString
         def search():
           for n, dic in enumerate(data["main"]):
@@ -38,13 +40,29 @@ class poll(commands.Cog):
             channel_fetch = self.client.get_channel(data['main'][index]['channel_id'])
             message_fetch = await channel_fetch.fetch_message(data['main'][index]['message_id'])
 
-
+            emoji_count_list = [];
             emoji_string = '';
+            number_thing = 0;
             for item in message_fetch.reactions:
-                emoji_string = emoji_string + str(item) + str(item.count) + '\n'
+                if(item.count == 1):
+                    votess = "vote"
+                else:
+                    votess = "votes"
+                emoji_string = emoji_string + "Option " + str(item) + " got " + str(item.count) + f" {votess}:\n``{data['main'][index]['content'][number_thing]}``\n"
+                emoji_count_list.append(int(item.count))
+                number_thing += 1;
 
+            decription_msg = data['main'][index]['timestamp']
+            decription_msg = datetime_dt.fromtimestamp(int(decription_msg))
+            decription_msg = decription_msg.strftime('Ended At: %-d %b %Y at %-I:%M %p - PDT')
 
-            await channel_fetch.send(f"Emojis:\n{emoji_string}")
+            count_list_index = emoji_count_list.index(max(emoji_count_list))
+            embed = discord.Embed(title=f"🎉 Results for: {data['main'][index]['title']}! 🎉", description=f"**{data['main'][index]['content'][count_list_index]}** is the winner with **{emoji_count_list[count_list_index]}** votes!\n\n{emoji_string}")
+            embed.set_footer(text=decription_msg)
+
+            await message_fetch.delete()
+
+            await channel_fetch.send(embed=embed)
             del data['main'][index]
             with open('./cogs/cog_assets/remindme.json', 'w') as f:
                 json.dump(data, f)
@@ -112,7 +130,7 @@ class poll(commands.Cog):
 
             dt_future = tz.localize(dt_now) + future_add_time
 
-            logTimestamp = datetime_dt.timestamp(dt_future)
+
 
             descriptionMsg = '';
             for i, val in enumerate(pollMsgOptions):
@@ -121,7 +139,7 @@ class poll(commands.Cog):
             customEmbed = discord.Embed(title="Poll: " + pollMsgContent.content, description=descriptionMsg)
 
             timeStringFooter = dt_future.strftime("%-d %b %Y at %-I:%M %p - %Z")
-            logTimeString = dt_future.strftime("%-d.%-m %-y-%-I.%M.%-S")
+            logTimeString = dt_future.strftime("%-d.%-m %-y:%-I.%M.%-S")
 
             customEmbed.set_footer(text=f'Ends on {timeStringFooter}')
 
@@ -135,11 +153,13 @@ class poll(commands.Cog):
                     xKey += 1
                 else:
                     break
-
+            logTimestamp = datetime_dt.timestamp(dt_future)
+            logTimestamp = str(logTimestamp).split('.')
+            logTimestamp = str(logTimestamp[0])
             #opens main remindme.json
             with open('./cogs/cog_assets/polls.json') as json_file:
                 data = json.load(json_file)
-            data['main'].append({ 'time': logTimeString, 'message_id': messageToReact.id, 'channel_id':  int(channelId)})
+            data['main'].append({ 'title' : pollMsgContent.content , 'content': str(pollMsgOptions), 'timestamp' : logTimestamp, 'time': logTimeString, 'message_id': messageToReact.id, 'channel_id':  int(channelId)})
             with open('./cogs/cog_assets/polls.json', 'w') as f:
                 json.dump(data, f)
 
@@ -164,6 +184,92 @@ class poll(commands.Cog):
                     break
 
 
+    @commands.command()
+    async def start(self, ctx, channel, time, amount, *, text):
+        split_text = text.split('| ')
+        options_text = str(split_text[1]).split(', ')
+        title_text = str(split_text[0])
+        channelId = str(channel)[2:][:-1]
+        pollOptionsAmount = len(options_text)
+        amount = amount.upper()
+
+        reactionDict = {
+            1: "1\N{variation selector-16}\N{combining enclosing keycap}",
+            2: "2\N{variation selector-16}\N{combining enclosing keycap}",
+            3: "3\N{variation selector-16}\N{combining enclosing keycap}",
+            4: "4\N{variation selector-16}\N{combining enclosing keycap}",
+            5: "5\N{variation selector-16}\N{combining enclosing keycap}",
+            6: "6\N{variation selector-16}\N{combining enclosing keycap}",
+            7: "7\N{variation selector-16}\N{combining enclosing keycap}",
+            8: "8\N{variation selector-16}\N{combining enclosing keycap}",
+            9: "9\N{variation selector-16}\N{combining enclosing keycap}"
+        }
+
+        tz = pytz.timezone("US/Pacific")
+        dt_now = datetime_dt.today()
+        future_add_time = '';
+
+        if not(amount == "F" or amount == "FOREVER"):
+            try:
+                if(amount == "M" or amount == "MINUTES" or amount == "MINUTE"):
+                    future_add_time = dt.timedelta(minutes = int(time))
+                elif(amount == "S" or amount == "SECONDS" or amount == "SECOND"):
+                    future_add_time = dt.timedelta(seconds = int(time))
+            except:
+                future_add_time = dt.timedelta(seconds = int(time))
+
+            dt_future = tz.localize(dt_now) + future_add_time
+
+            descriptionMsg = '';
+            for i, val in enumerate(options_text):
+                descriptionMsg = descriptionMsg + f"{reactionDict[i + 1]} : {options_text[i]}\n"
+
+            customEmbed = discord.Embed(title="Poll: " + title_text, description=descriptionMsg)
+
+            timeStringFooter = dt_future.strftime("%-d %b %Y at %-I:%M %p - %Z")
+            logTimeString = dt_future.strftime("%-d.%-m %-y:%-I.%M.%-S")
+
+            customEmbed.set_footer(text=f'Ends on {timeStringFooter}')
+
+            channel = self.client.get_channel(int(channelId))
+            messageToReact = await channel.send(embed=customEmbed)
+
+            xKey = 1
+            for key in reactionDict:
+                if not(xKey > pollOptionsAmount):
+                    await messageToReact.add_reaction(reactionDict[key])
+                    xKey += 1
+                else:
+                    break
+
+            logTimestamp = datetime_dt.timestamp(dt_future)
+            logTimestamp = str(logTimestamp).split('.')
+            logTimestamp = str(logTimestamp[0])
+
+            #opens main remindme.json
+            with open('./cogs/cog_assets/polls.json') as json_file:
+                data = json.load(json_file)
+            data['main'].append({ 'title' : title_text , 'content': options_text, 'timestamp' : logTimestamp, 'time': logTimeString, 'message_id': messageToReact.id, 'channel_id':  int(channelId)})
+            with open('./cogs/cog_assets/polls.json', 'w') as f:
+                json.dump(data, f)
+
+        else:
+            descriptionMsg = '';
+            for i, val in enumerate(options_text):
+                descriptionMsg = descriptionMsg + f"{reactionDict[i + 1]} : {options_text[i]}\n"
+
+            customEmbed = discord.Embed(title="Poll: " + title_text, description=descriptionMsg)
+
+            channel = self.client.get_channel(int(channelId))
+            messageToReact = await channel.send(embed=customEmbed)
+
+            xKey = 1
+            for key in reactionDict:
+                if not(xKey > pollOptionsAmount):
+                    await messageToReact.add_reaction(reactionDict[key])
+                    xKey += 1
+                else:
+                    break
 
 
     @commands.command()
