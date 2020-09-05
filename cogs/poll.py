@@ -15,6 +15,8 @@ with open('./config.json') as config_file:
 #global vars
 dt_now = datetime_dt.today()
 
+
+
 class poll(commands.Cog):
     def __init__(self, client):
         self.client = client
@@ -81,11 +83,27 @@ class poll(commands.Cog):
         await del_msg.delete()
         await channelMsg.delete()
 
+        if(channelId.isdigit() == False):
+            await ctx.send("Please make sure you selected a channel, example: #polls, after typing this discord should automatically correct it to a blue highlighted text, then send it to the bot.")
+            return
+
         del_msg = await ctx.send(f"Indubitably epic, The message will be sent in <#{channelId}>, Now that we have that out of the way, how long do you want the poll to last? **Type forever or f to disable a countdown.**\n``The amount will be counted in seconds, if you want to use minutes please include your amount with a m at the end, Example: 30 m``")
         timeMsg = await self.client.wait_for('message', check=lambda m: m.author == ctx.author and m.channel == ctx.channel)
         await timeMsg.delete()
         timeMsg = str(timeMsg.content).upper().split()
         await del_msg.delete()
+
+
+        if not(timeMsg[0] == "F" or timeMsg[0] == "FOREVER"):
+            try:
+                if not(timeMsg[1] == "S" or timeMsg[1] == "SECOND" or timeMsg[1] == "SECONDS" or timeMsg[1] == "M" or timeMsg[1] == "MINUTES" or timeMsg[1] == "MINUTE"):
+                    await ctx.send("Please make sure you selected a channel, example: #polls, after typing this discord should automatically correct it to a blue highlighted text, then send it to the bot.")
+                    return
+            except:
+                await ctx.send("You entered a invalid time and value, here is a dictionary for reference:\n```Forever   : F or Forever\nSeconds   : {Your Amount} S or Second(s)\nMinutes   : {Your amount} M or Minute(s)\n\nExamples:\nForever    : f\nSeconds    : 30 s\nMinutes    : 120 m```")
+                return
+    
+
         try:
             minute_value = timeMsg[1]
             del_msg = await ctx.send(f"Sounds like a plan! Your poll will last for a whole {timeMsg[0]} minutes! Last but not least, what do you want the poll to be about?\n``Example: What is your favorite minecraft server?``")
