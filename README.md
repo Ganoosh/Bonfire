@@ -25,3 +25,5 @@
 
 ## More Info
 - If you are interested in contacting me, please check my GitHub profile, it has multiple ways to contact me.
+- This is licensed under MIT, please read "LICENSE" for more information.
+- If you like what you see, feel free to star this page! I greatly appreciate it.
