@@ -1,3 +1,4 @@
 conf.json
 ./cogs/cog_assets/polls.json
 ./cogs/cog_assets/remindme.json
+./cogs/__pycache__
