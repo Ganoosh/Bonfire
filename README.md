@@ -11,7 +11,7 @@
 ## Basic Commands
 <details><summary>Expand Me</summary>
 <ul>
-  <li><s>ping : Shows the bots response time (Hosted kindly by repl.it)</s></li>
+  <li>ping : Shows the bots response time (Hosted kindly by repl.it)</li>
 </ul>  
 </details>
 
