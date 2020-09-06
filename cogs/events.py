@@ -1,3 +1,6 @@
+# Copyright MIT 2020 Nuch Services
+# This code or template is created by Ganoosh, and therefore you may not under any circumstances claim it as your own nor remove this signature.
+
 import discord
 from discord.ext import commands
 
@@ -15,3 +18,6 @@ class events(commands.Cog):
 
 def setup(client):
     client.add_cog(events(client))
+
+# Copyright MIT 2020 Nuch Services
+# This code or template is created by Ganoosh, and therefore you may not under any circumstances claim it as your own nor remove this signature.

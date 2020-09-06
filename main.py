@@ -1,3 +1,6 @@
+# Copyright MIT 2020 Nuch Services
+# This code or template is created by Ganoosh, and therefore you may not under any circumstances claim it as your own nor remove this signature.
+
 import discord
 from discord.ext import commands
 import json
@@ -38,3 +41,6 @@ async def on_ready():
 	await client.change_presence(activity=discord.Activity(type=3, name="for m!help"))
 
 client.run(token)
+
+# Copyright MIT 2020 Nuch Services
+# This code or template is created by Ganoosh, and therefore you may not under any circumstances claim it as your own nor remove this signature.

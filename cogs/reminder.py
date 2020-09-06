@@ -1,3 +1,6 @@
+# Copyright MIT 2020 Nuch Services
+# This code or template is created by Ganoosh, and therefore you may not under any circumstances claim it as your own nor remove this signature.
+
 import discord, pytz, json, time, asyncio
 import datetime as dt
 from discord import *
@@ -69,3 +72,6 @@ class reminder(commands.Cog):
 
 def setup(client):
     client.add_cog(reminder(client))
+
+# Copyright MIT 2020 Nuch Services
+# This code or template is created by Ganoosh, and therefore you may not under any circumstances claim it as your own nor remove this signature.

@@ -1,3 +1,6 @@
+# Copyright MIT 2020 Nuch Services
+# This code or template is created by Ganoosh, and therefore you may not under any circumstances claim it as your own nor remove this signature.
+
 import discord, pytz, json, time, asyncio
 from discord import *
 from discord.ext import *
@@ -316,3 +319,6 @@ class poll(commands.Cog):
 
 def setup(client):
     client.add_cog(poll(client))
+
+# Copyright MIT 2020 Nuch Services
+# This code or template is created by Ganoosh, and therefore you may not under any circumstances claim it as your own nor remove this signature.
