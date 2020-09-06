@@ -8,8 +8,6 @@
 - remindme : Reminds the user at a specified time, with a specified message.
 - ~image : Lets you search google for specific tags, you can move to the previous and next images with reactions~
 
-#Commands
----
 
 ## Basic Commands
 <details><summary>Expand Me</summary>
@@ -25,7 +23,7 @@
   <li><s>Info : Lets you view information about a specific nhentai manga.</s></li>
 </ul>  
 </details>
----
+
 
 ## More Info
 - If you are interested in contacting me, please check my GitHub profile, it has multiple ways to contact me.
