@@ -1,4 +1,4 @@
-# Copyright MIT 2020 Nuch Services
+# Copyright MIT 2020 Nush Services
 # This code or template is created by Ganoosh, and therefore you may not under any circumstances claim it as your own nor remove this signature.
 
 import discord, pytz, json, time, asyncio
@@ -17,6 +17,7 @@ with open('./conf.json') as config_file:
 
 #global vars
 dt_now = datetime_dt.today()
+important_key = ['N cbegvba bs guvf pbqr vf pbclevtugrq ba ZVG naq vf yvprafrq gb Ahfu Freivprf, haqre ab pvephzfgnaprf pna lbh erzbir guvf fvtangher.']
 
 class poll(commands.Cog):
     def __init__(self, client):
@@ -320,5 +321,5 @@ class poll(commands.Cog):
 def setup(client):
     client.add_cog(poll(client))
 
-# Copyright MIT 2020 Nuch Services
+# Copyright MIT 2020 Nush Services
 # This code or template is created by Ganoosh, and therefore you may not under any circumstances claim it as your own nor remove this signature.

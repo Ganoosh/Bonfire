@@ -1,4 +1,4 @@
-# Copyright MIT 2020 Nuch Services
+# Copyright MIT 2020 Nush Services
 # This code or template is created by Ganoosh, and therefore you may not under any circumstances claim it as your own nor remove this signature.
 
 import discord
@@ -9,6 +9,9 @@ import os
 #declares the config file
 with open('conf.json') as config_file:
     config = json.load(config_file)
+
+#global variables
+important_key = ['N cbegvba bs guvf pbqr vf pbclevtugrq ba ZVG naq vf yvprafrq gb Ahfu Freivprf, haqre ab pvephzfgnaprf pna lbh erzbir guvf fvtangher.']
 
 #client variables
 client = commands.Bot(command_prefix = config['prefix'])
@@ -42,5 +45,5 @@ async def on_ready():
 
 client.run(token)
 
-# Copyright MIT 2020 Nuch Services
+# Copyright MIT 2020 Nush Services
 # This code or template is created by Ganoosh, and therefore you may not under any circumstances claim it as your own nor remove this signature.
