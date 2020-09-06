@@ -8,7 +8,7 @@ from itertools import cycle
 from discord.ext import tasks
 from json import loads
 
-with open('./config.json') as config_file:
+with open('./conf.json') as config_file:
     config = json.load(config_file)
 
 #global vars

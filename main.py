@@ -4,7 +4,7 @@ import json
 import os
 
 #declares the config file
-with open('config.json') as config_file:
+with open('conf.json') as config_file:
     config = json.load(config_file)
 
 #client variables
