@@ -31,4 +31,4 @@
 - If you like what you see, feel free to star this page! I greatly appreciate it.
 
 ### Don't just steal this.
-#### This is here for documentation and due to me being a OSS freak, Although I love when people use my code in their own projects, but make sure you credit me in a public area.
+#### This is here for documentation and due to me being a OSS freak, Although I love when people use my code in their own projects, but make sure you credit me in a public area. This bot is hosted on a secure reliable server and has back-up code to make sure reminders and polls don't fail.
