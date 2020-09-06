@@ -10,13 +10,17 @@
 
 ## Basic Commands
 <details><summary>Expand Me</summary>
-- ~ping       : Shows the bots response time (Hosted kindly by repl.it)~
+<ul>
+  <li><s>ping       : Shows the bots response time (Hosted kindly by repl.it)</s></li>
+</ul>  
 </details>
 
 ## NSFW Commands ( 18+ Warning )
 <details><summary>Expand Me</summary>
-- ~hen         : Allows you to view nhentai manga inside of discord! Move around with reactions!~
-- ~Info        : Lets you view information about a specific nhentai manga.~
+<ul>
+  <li><s>hen         : Allows you to view nhentai manga inside of discord! Move around with reactions!</s></li>
+  <li><s>Info        : Lets you view information about a specific nhentai manga.</s></li>
+</ul>  
 </details>
 
 ## More Info
