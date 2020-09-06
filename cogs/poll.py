@@ -15,8 +15,6 @@ with open('./config.json') as config_file:
 #global vars
 dt_now = datetime_dt.today()
 
-
-
 class poll(commands.Cog):
     def __init__(self, client):
         self.client = client
@@ -102,7 +100,6 @@ class poll(commands.Cog):
             except:
                 await ctx.send("You entered a invalid time and value, here is a dictionary for reference:\n```Forever   : F or Forever\nSeconds   : {Your Amount} S or Second(s)\nMinutes   : {Your amount} M or Minute(s)\n\nExamples:\nForever    : f\nSeconds    : 30 s\nMinutes    : 120 m```")
                 return
-
 
         try:
             minute_value = timeMsg[1]
