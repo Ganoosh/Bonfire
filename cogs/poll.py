@@ -292,32 +292,6 @@ class poll(commands.Cog):
                 else:
                     break
 
-    @commands.command()
-    async def pollCreate(self, ctx, time, amount, *, text):
-        tz = pytz.timezone("US/Pacific")
-        dt_now = datetime_dt.today()
-
-        if(amount == "s" or amount == "second" or amount == "seconds"):
-            future_add_time = dt.timedelta(seconds = int(time))
-        elif(amount == "m" or amount == "minute" or amount == "minutes"):
-            future_add_time = dt.timedelta(minutes = int(time))
-        elif(amount == "h" or amount == "hour" or amount == "hours"):
-            future_add_time = dt.timedelta(hours = int(time))
-        elif(amount == "d" or amount == "day" or amount == "days"):
-            future_add_time = dt.timedelta(days = int(time))
-        elif(amount == "month" or amount == "months"):
-            future_add_time = dt.timedelta(months = int(time))
-        elif(amount == "y" or amount == "year" or amount == "years"):
-            future_add_time = dt.timedelta(years = int(time))
-        dt_future = tz.localize(dt_now) + future_add_time
-        #opens main remindme.json
-        with open('./cogs/cog_assets/remindme.json') as json_file:
-            data = json.load(json_file)
-        data['main'].append({'time': f"{dt_future.year}.{dt_future.month}.{dt_future.day} - {dt_future.hour}.{dt_future.minute}.{dt_future.second}", "user_id": ctx.author.id, "content": text, "channel_id" : ctx.channel.id})
-        with open('./cogs/cog_assets/remindme.json', 'w') as f:
-            json.dump(data, f)
-
-
 def setup(client):
     client.add_cog(poll(client))
 

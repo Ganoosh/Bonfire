@@ -49,6 +49,7 @@ class reminder(commands.Cog):
     async def remindme(self, ctx, time, amount, *, text):
         tz = pytz.timezone("US/Pacific")
         dt_now = datetime_dt.today()
+        amount = amount.lower()
 
         if(amount == "s" or amount == "second" or amount == "seconds"):
             future_add_time = dt.timedelta(seconds = int(time))
