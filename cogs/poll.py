@@ -50,7 +50,7 @@ class poll(commands.Cog):
                     votess = "vote"
                 else:
                     votess = "votes"
-                emoji_string = emoji_string + "Option " + str(item) + " got " + str(item.count) + f" {votess}:\n``{data['main'][index]['content'][number_thing]}``\n"
+                emoji_string = emoji_string + "``" + str(data['main'][index]['content'][number_thing]) +"``" + " Got " "``" + str(item.count) + "``" + f" {votess}\n"
                 emoji_count_list.append(int(item.count))
                 number_thing += 1;
 
@@ -102,7 +102,7 @@ class poll(commands.Cog):
             except:
                 await ctx.send("You entered a invalid time and value, here is a dictionary for reference:\n```Forever   : F or Forever\nSeconds   : {Your Amount} S or Second(s)\nMinutes   : {Your amount} M or Minute(s)\n\nExamples:\nForever    : f\nSeconds    : 30 s\nMinutes    : 120 m```")
                 return
-    
+
 
         try:
             minute_value = timeMsg[1]
@@ -115,13 +115,18 @@ class poll(commands.Cog):
         await del_msg.delete()
         await pollMsgContent.delete()
 
-        del_msg = await ctx.send(f"Awesome! Along with that, what options do you want?\n``Please split each option with a comma and a space. Max is 9, Example: Hypixel, The Hive, Lifeboat``")
+        del_msg = await ctx.send(f"Awesome! Along with that, what options do you want?\n``Please split each option with a comma. Max is 9, Example: Hypixel, The Hive, Lifeboat``")
         pollMsgOptions = await self.client.wait_for('message', check=lambda m: m.author == ctx.author and m.channel == ctx.channel)
         await del_msg.delete()
         await pollMsgOptions.delete()
 
-        pollMsgOptions = str(pollMsgOptions.content).split(", ")
+        await ctx.send(f"Poll has been successfully posting in: <#{channelId}>!")
+
+        pollMsgOptions = str(pollMsgOptions.content).split(",")
         pollOptionsAmount = len(pollMsgOptions)
+
+        for key in range(len(pollMsgOptions)):
+            pollMsgOptions[key] = pollMsgOptions[key].strip()
 
         reactionDict = {
             1: "1\N{variation selector-16}\N{combining enclosing keycap}",
@@ -145,10 +150,7 @@ class poll(commands.Cog):
             except:
                 future_add_time = dt.timedelta(seconds = int(timeMsg[0]))
 
-
             dt_future = tz.localize(dt_now) + future_add_time
-
-
 
             descriptionMsg = '';
             for i, val in enumerate(pollMsgOptions):
@@ -177,11 +179,9 @@ class poll(commands.Cog):
             #opens main remindme.json
             with open('./cogs/cog_assets/polls.json') as json_file:
                 data = json.load(json_file)
-            data['main'].append({ 'title' : pollMsgContent.content , 'content': str(pollMsgOptions), 'timestamp' : logTimestamp, 'time': logTimeString, 'message_id': messageToReact.id, 'channel_id':  int(channelId)})
+            data['main'].append({ 'title' : pollMsgContent.content , 'content': pollMsgOptions, 'timestamp' : logTimestamp, 'time': logTimeString, 'message_id': messageToReact.id, 'channel_id':  int(channelId)})
             with open('./cogs/cog_assets/polls.json', 'w') as f:
                 json.dump(data, f)
-
-
 
         else:
             descriptionMsg = '';
@@ -192,6 +192,8 @@ class poll(commands.Cog):
 
             channel = self.client.get_channel(int(channelId))
             messageToReact = await channel.send(embed=customEmbed)
+
+
 
             xKey = 1
             for key in reactionDict:
@@ -288,7 +290,6 @@ class poll(commands.Cog):
                     xKey += 1
                 else:
                     break
-
 
     @commands.command()
     async def pollCreate(self, ctx, time, amount, *, text):
