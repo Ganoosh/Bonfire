@@ -74,6 +74,9 @@ class poll(commands.Cog):
 
     @commands.command()
     async def create(self, ctx):
+
+        command_definer = [{"name": "create", "description": "interactive poll setup"}]
+
         await ctx.message.delete()
 
         tz = pytz.timezone("US/Pacific")
@@ -207,6 +210,9 @@ class poll(commands.Cog):
 
     @commands.command()
     async def start(self, ctx, channel, time, amount, *, text):
+
+        command_definer = [{"name": "start", "description": "quick poll setup"}]
+
         split_text = text.split('| ')
         options_text = str(split_text[1]).split(', ')
         title_text = str(split_text[0])
