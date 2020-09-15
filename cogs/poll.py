@@ -11,6 +11,8 @@ from datetime import datetime as datetime_dt
 from itertools import cycle
 from discord.ext import tasks
 from json import loads
+import requests
+import os
 
 with open('./conf.json') as config_file:
     config = json.load(config_file)
@@ -70,6 +72,42 @@ class poll(commands.Cog):
             del data['main'][index]
             with open('./cogs/cog_assets/remindme.json', 'w') as f:
                 json.dump(data, f)
+
+
+    @commands.command(aliases=['screate', 'sc'])
+    async def strawpoll(self, ctx, *, text):
+
+        command_definer = [{"name": "strawpoll", "description": "quick strawpoll api setup"}]
+
+        split_text = text.split('| ')
+        options_text = str(split_text[2]).split(', ')
+        description = str(split_text[1])
+        title_text = str(split_text[0])
+        pollOptionsAmount = len(options_text)
+
+
+        descriptionMsg = '';
+        for i, val in enumerate(options_text):
+            descriptionMsg = descriptionMsg + f'"{options_text[i]}", '
+
+        payload = '{"poll":{"title":' + '"' + title_text.strip() + '"' + ',"description":' + '"' + description.strip() + '"' + ',"answers":[' + descriptionMsg.strip()[:-1] + ']}}'
+
+        url = "https://strawpoll.com/api/poll"
+
+        headers = {
+        'Content-Type': 'application/json'
+        }
+
+        response = requests.request("POST", url, headers=headers, data = payload)
+
+        item = json.loads(response.text.encode('utf8'))
+        item_content = item['content_id']
+
+        embed=discord.Embed()
+        embed.add_field(name="Your poll has been successfully created!", value=f"Visit: https://strawpoll.com/{item_content} to view your poll.", inline=False)
+        await ctx.send(embed=embed)
+
+
 
 
     @commands.command()

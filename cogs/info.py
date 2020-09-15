@@ -14,6 +14,26 @@ class info(commands.Cog):
     def __init__(self, client):
         self.client = client
 
+    @commands.command()
+    async def info(self, ctx):
+        with open('./cogs/cog_assets/amount.json') as json_file:
+            data = json.load(json_file)
+            command_info = data['item_info'][0]['amount']
+            command_count = data['item_info'][0]['cog_count']
+            command_data = data['item_info'][0]['descriptions']
+            command_data = command_data
+
+        help_string = ""
+
+        for key in command_data:
+            help_string = help_string + "*" + key + "*" + ": " + command_data[key] +"\n"
+
+        embed = discord.Embed(title="MAB Commands")
+        embed.add_field(name="Commands:", value=help_string)
+        embed.add_field(name="Total Commands:", value=f"MAB has **{command_info}** commands in **{command_count}** cogs", inline=False)
+        await ctx.send(embed=embed)
+
+
 
     @commands.command(pass_context=True)
     async def ping(self, ctx):
