@@ -47,6 +47,9 @@ class reminder(commands.Cog):
 
     @commands.command()
     async def remindme(self, ctx, time, amount, *, text):
+
+        command_definer = [{"name": "remindme", "description": "quick reminder setup"}]
+
         tz = pytz.timezone("US/Pacific")
         dt_now = datetime_dt.today()
         amount = amount.lower()

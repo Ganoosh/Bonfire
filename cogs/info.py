@@ -6,6 +6,8 @@ from discord.ext import commands, timers
 import time
 import datetime
 import json
+import sys
+import platform, os
 
 #global variables
 important_key = ['N cbegvba bs guvf pbqr vf pbclevtugrq ba ZVG naq vf yvprafrq gb Ahfu Freivprf, haqre ab pvephzfgnaprf pna lbh erzbir guvf fvtangher.']
@@ -15,7 +17,8 @@ class info(commands.Cog):
         self.client = client
 
     @commands.command()
-    async def info(self, ctx):
+    async def help(self, ctx):
+        command_definer = [{"name": "help", "description": "shows bot commands"}]
         with open('./cogs/cog_assets/amount.json') as json_file:
             data = json.load(json_file)
             command_info = data['item_info'][0]['amount']
@@ -26,11 +29,19 @@ class info(commands.Cog):
         help_string = ""
 
         for key in command_data:
-            help_string = help_string + "*" + key + "*" + ": " + command_data[key] +"\n"
+            help_string = help_string + "*" + key + "*" + " : " + command_data[key] +"\n"
+
+        os.system('distro -j > ./assets/host_version.json')
+        with open('./assets/host_version.json') as json_file:
+            data = json.load(json_file)
+            os_type = data['id']
+
+        uname = platform.uname()
 
         embed = discord.Embed(title="MAB Commands")
-        embed.add_field(name="Commands:", value=help_string)
-        embed.add_field(name="Total Commands:", value=f"MAB has **{command_info}** commands in **{command_count}** cogs", inline=False)
+        embed.add_field(name="Commands: ", value=help_string)
+        embed.add_field(name="Total Commands: ", value=f"MAB has **{command_info}** commands in **{int(command_count)-1}** cogs", inline=False)
+        embed.add_field(name=f"Host:", value=f"{os_type} - {uname.release}{uname.machine}\npython{sys.version_info.major}.{sys.version_info.minor}.{sys.version_info.micro} - {sys.version_info.releaselevel}", inline=False)
         await ctx.send(embed=embed)
 
 
@@ -38,6 +49,7 @@ class info(commands.Cog):
     @commands.command(pass_context=True)
     async def ping(self, ctx):
         """ Pong! """
+        command_definer = [{"name": "ping", "description": "pings the bot."}]
         before = time.monotonic()
         message = await ctx.send("Loading...")
         ping = (time.monotonic() - before) * 1000
@@ -46,14 +58,14 @@ class info(commands.Cog):
         embed.add_field(name="Gateway:", value=f"{int(ping)}ms", inline=False)
         await message.delete()
         await ctx.send(embed=embed)
+        uname = platform.uname()
+        print(f"System: {uname.system}")
+        print(f"Node Name: {uname.node}")
+        print(f"Release: {uname.release}")
+        print(f"Version: {uname.version}")
+        print(f"Machine: {uname.machine}")
+        print(f"Processor: {uname.processor}")
 
-    @commands.command()
-    async def help(self, ctx):
-        embed = discord.Embed(title="MAB Commands")
-        embed.add_field(name="Polls:", value="_m!create_ : Interactive poll setup\n_m!create_ {channel} {time (f = forever)} {type s(sec)/m(min)/f(inf)} {poll title} | {option1, option2, etc}\nCommas in your title arent allowed.")
-        embed.add_field(name="Info:", value="_m!ping_ : Gets bot ping", inline=False)
-        embed.add_field(name="Util:", value="_m!remindme {time} {m(minutes) or s(seconds)} {reminder text}_ : reminds you.", inline=False)
-        await ctx.send(embed=embed)
 
 def setup(client):
     client.add_cog(info(client))

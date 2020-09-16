@@ -107,6 +107,24 @@ class poll(commands.Cog):
         embed.add_field(name="Your poll has been successfully created!", value=f"Visit: https://strawpoll.com/{item_content} to view your poll.", inline=False)
         await ctx.send(embed=embed)
 
+    @commands.command(aliases=['rs', 'readstraw'])
+    async def strawpollread(self, ctx, link):
+        command_definer = [{"name": "strawpollread", "description": "reads a active strawpoll"}]
+
+        straw_id = link.partition("strawpoll.com/")[2]
+
+
+        request_url = "https://strawpoll.com/api/poll/" + straw_id
+        print(request_url)
+
+        r = requests.get(request_url)
+        r = r.json()
+
+        poll_answers = r['content']['poll']['poll_answers']
+
+        for key in range(len(poll_answers)):
+            print(key)
+            print(poll_answers[key])
 
 
 
@@ -218,6 +236,7 @@ class poll(commands.Cog):
             logTimestamp = datetime_dt.timestamp(dt_future)
             logTimestamp = str(logTimestamp).split('.')
             logTimestamp = str(logTimestamp[0])
+
             #opens main remindme.json
             with open('./cogs/cog_assets/polls.json') as json_file:
                 data = json.load(json_file)
