@@ -113,7 +113,6 @@ class poll(commands.Cog):
 
         straw_id = link.partition("strawpoll.com/")[2]
 
-
         request_url = "https://strawpoll.com/api/poll/" + straw_id
 
         r = requests.get(request_url)
