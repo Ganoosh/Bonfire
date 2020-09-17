@@ -115,17 +115,28 @@ class poll(commands.Cog):
 
 
         request_url = "https://strawpoll.com/api/poll/" + straw_id
-        print(request_url)
 
         r = requests.get(request_url)
         r = r.json()
 
         poll_answers = r['content']['poll']['poll_answers']
+        poll_answer_string = ""
+        poll_info = r['content']['poll']
+        poll_title = poll_info['title']
+        poll_description = poll_info['poll_info']['description']
+
+        count_list = []
 
         for key in range(len(poll_answers)):
-            print(key)
-            print(poll_answers[key])
+            poll_answer_string = poll_answer_string + "``" + poll_answers[key]['answer'] + "`` has ``" + str(poll_answers[key]['votes']) + "`` votes" + "\n"
+            count_list.append(int(poll_answers[key]['votes']))
 
+        count_list_index = count_list.index(max(count_list))
+
+
+        embed = discord.Embed(title=f"🎉 **{poll_answers[count_list_index]['answer']}** is winning with **{poll_answers[count_list_index]['votes']}** vote(s)🎉", description=f"*Title:* {poll_title}\n*Description:* {poll_description}")
+        embed.add_field(name="Poll Information:", value=poll_answer_string)
+        await ctx.send(embed=embed)
 
 
     @commands.command()
