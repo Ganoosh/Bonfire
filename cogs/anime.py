@@ -7,6 +7,8 @@ import time
 import datetime
 import json
 import requests
+from fuzzywuzzy import fuzz
+from fuzzywuzzy import process
 
 #global variables
 important_key = ['N cbegvba bs guvf pbqr vf pbclevtugrq ba ZVG naq vf yvprafrq gb Ahfu Freivprf, haqre ab pvephzfgnaprf pna lbh erzbir guvf fvtangher.']
@@ -51,9 +53,24 @@ class anime(commands.Cog):
         jresponse = json.loads(jresponse)
 
 
-        embed = discord.Embed(title="Success!", description=f"Now playing: {query}\nType: {aType}\nEpisode: {episode}")
+        name_list = []
+        number_results_list = []
+
+
+        for i, val in enumerate(jresponse['results']):
+            name_list.append(jresponse['results'][i]['title'])
+
+        for i, val in enumerate(name_list):
+            number_results_list.append(fuzz.ratio(jresponse['results'][i]['title'], query))
+
+        
+        max_number = max(number_results_list)
+    
+        best_r = jresponse['results'][number_results_list.index(max_number)]
+
+        embed = discord.Embed(title="Success!", description=f"Now playing: {best_r['title']}\nType: {aType.capitalize()}\nEpisode: {episode}")
         embed.add_field(name="Your w2g room: ", value=w2gR)
-        embed.set_image(url=jresponse['results'][0]['image_url'])
+        embed.set_image(url=best_r['image_url'])
 
         await msg.edit(embed=embed)
 
