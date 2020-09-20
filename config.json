@@ -1,5 +1,6 @@
 {
     "token" : "Bot Token",
     "owner_id" : "ID",
-    "prefix": "Prefix"
+    "prefix": "Prefix",
+    "aniscrap": "Private Scrapping Hosted URL"
 }

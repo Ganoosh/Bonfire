@@ -38,7 +38,7 @@ class info(commands.Cog):
 
         uname = platform.uname()
 
-        embed = discord.Embed(title="MAB Commands")
+        embed = discord.Embed(title="MAB Commands", description="Not sure how to use a command? Check out our more in depth list:\nhttps://bot.nush.me/")
         embed.add_field(name="Commands: ", value=help_string)
         embed.add_field(name="Total Commands: ", value=f"MAB has **{command_info}** commands in **{int(command_count)-1}** cogs", inline=False)
         embed.add_field(name=f"Host:", value=f"{os_type} - {uname.release}{uname.machine}\npython{sys.version_info.major}.{sys.version_info.minor}.{sys.version_info.micro} - {sys.version_info.releaselevel}", inline=False)

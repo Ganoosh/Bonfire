@@ -107,7 +107,7 @@ class poll(commands.Cog):
         embed.add_field(name="Your poll has been successfully created!", value=f"Visit: https://strawpoll.com/{item_content} to view your poll.", inline=False)
         await ctx.send(embed=embed)
 
-    @commands.command(aliases=['rs', 'readstraw'])
+    @commands.command(aliases=['spr', 'sr', 'readstraw'])
     async def strawpollread(self, ctx, link):
         command_definer = [{"name": "strawpollread", "description": "reads a active strawpoll"}]
 
@@ -138,7 +138,7 @@ class poll(commands.Cog):
         await ctx.send(embed=embed)
 
 
-    @commands.command()
+    @commands.command(aliases=['pc'])
     async def create(self, ctx):
 
         command_definer = [{"name": "create", "description": "interactive poll setup"}]
@@ -275,7 +275,7 @@ class poll(commands.Cog):
                     break
 
 
-    @commands.command()
+    @commands.command(aliases=['sp', 'ps'])
     async def start(self, ctx, channel, time, amount, *, text):
 
         command_definer = [{"name": "start", "description": "quick poll setup"}]

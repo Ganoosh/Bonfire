@@ -23,6 +23,8 @@ class anime(commands.Cog):
     @commands.command(aliases=['w2g', 'animew2g', 'w2ga', 'a2g'])
     async def w2a(self, ctx, aType, episode, *, query):
 
+        command_definer = [{"name": "w2a", "description": "starts a w2g room with your choice of anime!"}]
+        
         membed = discord.Embed(title="Loading...")
         msg = await ctx.send(embed=membed)
 
