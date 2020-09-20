@@ -11,6 +11,9 @@ import requests
 #global variables
 important_key = ['N cbegvba bs guvf pbqr vf pbclevtugrq ba ZVG naq vf yvprafrq gb Ahfu Freivprf, haqre ab pvephzfgnaprf pna lbh erzbir guvf fvtangher.']
 
+with open('./conf.json') as config_file:
+    config = json.load(config_file)
+
 class anime(commands.Cog):
     def __init__(self, client):
         self.client = client
@@ -21,7 +24,9 @@ class anime(commands.Cog):
         membed = discord.Embed(title="Loading...")
         msg = await ctx.send(embed=membed)
 
-        url = f"https://AnimeScrap.ganoosh.repl.co/search?query={query}&type={aType}&episode={episode}"
+        private_api_url = config['aniscrap']
+
+        url = f"{private_api_url}/search?query={query}&type={aType}&episode={episode}"
 
         payload = {}
         headers= {}
@@ -30,22 +35,18 @@ class anime(commands.Cog):
         response = response.text.encode('utf8')
         response = json.loads(response)
 
-        purl = f"https://animescrap-1.ganoosh.repl.co/create?url={response['url']}"
+        purl = f"{private_api_url}/create?url={response['url']}"
 
-        ppayload = {}
-        pheaders= {}
 
-        presponse = requests.request("GET", purl, headers=pheaders, data = ppayload)
+        presponse = requests.request("GET", purl, headers=headers, data = payload)
         presponse = presponse.text.encode('utf8')
         presponse = json.loads(presponse)
 
         w2gR = f"https://w2g.tv/rooms/{presponse['streamkey']}"
 
         jurl = f"https://api.jikan.moe/v3/search/anime?q={query}&page=1"
-        jpayload = {}
-        jheaders = {}
 
-        jresponse = requests.request("GET", jurl, headers=jpayload, data = jpayload)
+        jresponse = requests.request("GET", jurl, headers=payload, data = payload)
         jresponse = jresponse.text.encode('utf8')
         jresponse = json.loads(jresponse)
 
