@@ -17,6 +17,15 @@ class info(commands.Cog):
         self.client = client
 
     @commands.command()
+    async def info(self, ctx):
+        command_definer = [{"name": "info", "description": "shows the bots information."}]
+        embed = discord.Embed(title="Bonfire Information:")
+        embed.set_thumbnail(url='https://bot.nush.me/assets/icon.png')
+        embed.add_field(name="Author:", value="Ganoosh (Nush)\nGithub: https://github.com/ganoosh", inline=False)
+        embed.add_field(name="Source Code:", value="Github: https://github.com/Ganoosh/Bonfire\nInfo: This is for documentation and reference only.", inline=False)
+        await ctx.send(embed=embed)
+
+    @commands.command()
     async def help(self, ctx):
         command_definer = [{"name": "help", "description": "shows bot commands"}]
         with open('./cogs/cog_assets/amount.json') as json_file:
@@ -38,9 +47,9 @@ class info(commands.Cog):
 
         uname = platform.uname()
 
-        embed = discord.Embed(title="MAB Commands", description="Not sure how to use a command? Check out our more in depth list:\nhttps://bot.nush.me/")
+        embed = discord.Embed(title="Bonfire Commands", description="Not sure how to use a command? Check out our more in depth list:\nhttps://bot.nush.me/")
         embed.add_field(name="Commands: ", value=help_string)
-        embed.add_field(name="Total Commands: ", value=f"MAB has **{command_info}** commands in **{int(command_count)-1}** cogs", inline=False)
+        embed.add_field(name="Total Commands: ", value=f"Bonfire has **{command_info}** commands in **{int(command_count)-1}** cogs", inline=False)
         embed.add_field(name=f"Host:", value=f"{os_type} - {uname.release}{uname.machine}\npython{sys.version_info.major}.{sys.version_info.minor}.{sys.version_info.micro} - {sys.version_info.releaselevel}", inline=False)
         await ctx.send(embed=embed)
 

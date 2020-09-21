@@ -79,12 +79,15 @@ class poll(commands.Cog):
 
         command_definer = [{"name": "strawpoll", "description": "quick strawpoll api setup"}]
 
-        split_text = text.split('| ')
-        options_text = str(split_text[2]).split(', ')
-        description = str(split_text[1])
-        title_text = str(split_text[0])
-        pollOptionsAmount = len(options_text)
-
+        try:
+            split_text = text.split('| ')
+            options_text = str(split_text[2]).split(', ')
+            description = str(split_text[1])
+            title_text = str(split_text[0])
+            pollOptionsAmount = len(options_text)
+        except:
+            await ctx.send("One of your arguments was formatted incorrect. Confused? Please check https://bot.nush.me/ for more in depth examples.")
+            return
 
         descriptionMsg = '';
         for i, val in enumerate(options_text):
@@ -117,6 +120,7 @@ class poll(commands.Cog):
 
         r = requests.get(request_url)
         r = r.json()
+
 
         poll_answers = r['content']['poll']['poll_answers']
         poll_answer_string = ""
@@ -280,12 +284,16 @@ class poll(commands.Cog):
 
         command_definer = [{"name": "start", "description": "quick poll setup"}]
 
-        split_text = text.split('| ')
-        options_text = str(split_text[1]).split(', ')
-        title_text = str(split_text[0])
-        channelId = str(channel)[2:][:-1]
-        pollOptionsAmount = len(options_text)
-        amount = amount.upper()
+        try:
+            split_text = text.split('| ')
+            options_text = str(split_text[1]).split(', ')
+            title_text = str(split_text[0])
+            channelId = str(channel)[2:][:-1]
+            pollOptionsAmount = len(options_text)
+            amount = amount.upper()
+        except:
+            await ctx.send("One of your arguments was formatted incorrect. Confused? Please check https://bot.nush.me/ for more in depth examples.")
+            return
 
         reactionDict = {
             1: "1\N{variation selector-16}\N{combining enclosing keycap}",

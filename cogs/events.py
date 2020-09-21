@@ -54,9 +54,9 @@ class events(commands.Cog):
         with open('./cogs/cog_assets/amount.json', 'w') as f:
                 json.dump(data, f)
 
-#    @commands.Cog.listener()
-#    async def on_command_error(self, msg, error):
-#        await msg.send("An error occured, please check to make sure your syntax is correct.")
+    @commands.Cog.listener()
+    async def on_command_error(self, msg, error):
+        await msg.send("An error occured, please check to make sure your syntax is correct.")
 
 def setup(client):
     client.add_cog(events(client))
