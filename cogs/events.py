@@ -2,9 +2,13 @@
 # This code or template is created by Ganoosh, and therefore you may not under any circumstances claim it as your own nor remove this signature.
 
 import discord
-from discord.ext import commands
+from discord.ext import commands, tasks
 import json
 import os
+import requests
+
+with open('./conf.json') as config_file:
+    config = json.load(config_file)
 
 #global variables
 important_key = ['N cbegvba bs guvf pbqr vf pbclevtugrq ba ZVG naq vf yvprafrq gb Ahfu Freivprf, haqre ab pvephzfgnaprf pna lbh erzbir guvf fvtangher.']
@@ -12,9 +16,28 @@ important_key = ['N cbegvba bs guvf pbqr vf pbclevtugrq ba ZVG naq vf yvprafrq g
 class events(commands.Cog):
     def __init__(self, client):
         self.client = client
+        self.write_stats.start()
+
+    @tasks.loop(seconds=60)
+    async def write_stats(self):
+        await self.client.wait_until_ready()
+        server_list = []
+        channels_list = []
+        totalMembers = 0
+        for server in self.client.guilds:
+            server_list.append(server.name)
+            for channel in server.channels:
+                channels_list.append(channel.id)
+            totalMembers += len(server.members)
+        channel_amount = str(len(channels_list))
+        server_amount = str(len(server_list))
+        reqUrl = f"https://bonfiredashboard.ganoosh.repl.co/add/info/stats?auth={config['stats_auth_token']}&guilds={server_amount}&channels={channel_amount}&users={totalMembers}"
+        requests.get(reqUrl) 
+        
 
     @commands.Cog.listener()
     async def on_ready(self):
+
         print('Ready.')
 
         listOfFiles = []
