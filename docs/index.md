@@ -1,1 +1,0 @@
-# Please look to the left sidebar to navigate.
