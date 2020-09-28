@@ -16,7 +16,7 @@ class handlers(commands.Cog):
 
     @commands.command()
     async def report(self, ctx, *, msg):
-        command_definer = [{"name": "report", "description": "files an error to the bot owner."}]
+        command_definer = [{"name": "report", "description": "https://bonfire.cf/#/md/commands?id=utility-commands", "section": "Utility"}]
         await ctx.author.send(msg)
 
 def setup(client):

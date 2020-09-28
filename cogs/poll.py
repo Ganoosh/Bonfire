@@ -77,7 +77,7 @@ class poll(commands.Cog):
     @commands.command(aliases=['screate', 'sc'])
     async def strawpoll(self, ctx, *, text):
 
-        command_definer = [{"name": "strawpoll", "description": "quick strawpoll api setup"}]
+        command_definer = [{"name": "strawpoll", "description": "https://bonfire.cf/#/md/commands?id=poll-commands", "section": "Polls"}]
 
         try:
             split_text = text.split('| ')
@@ -112,7 +112,7 @@ class poll(commands.Cog):
 
     @commands.command(aliases=['spr', 'sr', 'readstraw'])
     async def strawpollread(self, ctx, link):
-        command_definer = [{"name": "strawpollread", "description": "reads a active strawpoll"}]
+        command_definer = [{"name": "strawpollread", "description": "https://bonfire.cf/#/md/commands?id=poll-commands", "section": "Polls"}]
 
         straw_id = link.partition("strawpoll.com/")[2]
 
@@ -145,7 +145,7 @@ class poll(commands.Cog):
     @commands.command(aliases=['pc'])
     async def create(self, ctx):
 
-        command_definer = [{"name": "create", "description": "interactive poll setup"}]
+        command_definer = [{"name": "create", "description": "https://bonfire.cf/#/md/commands?id=poll-commands", "section": "Polls"}]
 
         await ctx.message.delete()
 
@@ -282,7 +282,7 @@ class poll(commands.Cog):
     @commands.command(aliases=['sp', 'ps'])
     async def start(self, ctx, channel, time, amount, *, text):
 
-        command_definer = [{"name": "start", "description": "quick poll setup"}]
+        command_definer = [{"name": "start", "description": "https://bonfire.cf/#/md/commands?id=poll-commands", "section": "Polls"}]
 
         try:
             split_text = text.split('| ')

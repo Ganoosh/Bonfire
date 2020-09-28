@@ -48,7 +48,7 @@ class reminder(commands.Cog):
     @commands.command()
     async def remindme(self, ctx, time, amount, *, text):
 
-        command_definer = [{"name": "remindme", "description": "quick reminder setup"}]
+        command_definer = [{"name": "remindme", "description": "https://bonfire.cf/#/md/commands?id=reminder-commands", "section": "Reminders"}]
 
         tz = pytz.timezone("US/Pacific")
         dt_now = datetime_dt.today()

@@ -41,7 +41,7 @@ for filename in os.listdir('./cogs'):
 
 @client.event
 async def on_ready():
-	await client.change_presence(activity=discord.Activity(type=3, name="for m!help"))
+	await client.change_presence(activity=discord.Activity(type=3, name="for b!help"))
 
 client.run(token)
 

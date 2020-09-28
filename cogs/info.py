@@ -18,7 +18,7 @@ class info(commands.Cog):
 
     @commands.command()
     async def info(self, ctx):
-        command_definer = [{"name": "info", "description": "shows the bots information."}]
+        command_definer = [{"name": "info", "description": "https://bonfire.cf/#/md/commands?id=information-commands", "section": "Information"}]
         embed = discord.Embed(title="Bonfire Information:")
         embed.set_thumbnail(url='https://bot.nush.me/assets/icon.png')
         embed.add_field(name="Author:", value="Ganoosh (Nush)\nGithub: https://github.com/ganoosh", inline=False)
@@ -27,18 +27,33 @@ class info(commands.Cog):
 
     @commands.command()
     async def help(self, ctx):
-        command_definer = [{"name": "help", "description": "shows bot commands"}]
+        command_definer = [{"name": "help", "description": "https://bonfire.cf/#/md/commands?id=information-commands", "section": "Information"}]
         with open('./cogs/cog_assets/amount.json') as json_file:
             data = json.load(json_file)
             command_info = data['item_info'][0]['amount']
             command_count = data['item_info'][0]['cog_count']
             command_data = data['item_info'][0]['descriptions']
-            command_data = command_data
+
+        embed = discord.Embed(title="Bonfire Commands", description="Not sure how to use a command? Check out our more in depth list:\nhttps://bonfire.cf/\n")
 
         help_string = ""
+        help_dict = {}
+        section_list = {}
 
         for key in command_data:
-            help_string = help_string + "*" + key + "*" + " : " + command_data[key] +"\n"
+            help_dict[key] = command_data[key][1]
+            if command_data[key][1] not in section_list: 
+                section_list[command_data[key][1]] = []
+
+        for key in help_dict:
+            section_list[help_dict[key]].append(key)
+
+        for key in section_list:
+            for item in section_list[key]:
+                help_string = help_string + f"``└─ {item}``\n"
+
+            embed.add_field(name=key, value=help_string, inline=True)
+            help_string = ''
 
         os.system('distro -j > ./assets/host_version.json')
         with open('./assets/host_version.json') as json_file:
@@ -47,8 +62,6 @@ class info(commands.Cog):
 
         uname = platform.uname()
 
-        embed = discord.Embed(title="Bonfire Commands", description="Not sure how to use a command? Check out our more in depth list:\nhttps://bot.nush.me/")
-        embed.add_field(name="Commands: ", value=help_string)
         embed.add_field(name="Total Commands: ", value=f"Bonfire has **{command_info}** commands in **{int(command_count)-1}** cogs", inline=False)
         embed.add_field(name=f"Host:", value=f"{os_type} - {uname.release}{uname.machine}\npython{sys.version_info.major}.{sys.version_info.minor}.{sys.version_info.micro} - {sys.version_info.releaselevel}", inline=False)
         await ctx.send(embed=embed)
@@ -58,7 +71,7 @@ class info(commands.Cog):
     @commands.command(pass_context=True)
     async def ping(self, ctx):
         """ Pong! """
-        command_definer = [{"name": "ping", "description": "pings the bot."}]
+        command_definer = [{"name": "ping", "description": "https://bonfire.cf/#/md/commands?id=information-commands", "section": "Information"}]
         before = time.monotonic()
         message = await ctx.send("Loading...")
         ping = (time.monotonic() - before) * 1000
